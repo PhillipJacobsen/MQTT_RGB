@@ -72,6 +72,27 @@ void set_Handler (const String & payload) {
   Serial.println(payload);
 }
 
+void rgb2_Handler (const String & payload) {
+  Serial.print("received MQTT topic PJsensors/rgb2: ");
+  Serial.println(payload);
+
+ StaticJsonDocument<100> doc;
+
+  // Deserialize the JSON document
+  DeserializationError error = deserializeJson(doc, payload);
+
+ int b = doc["b"]; 
+ int r = doc["r"];
+ int g = doc["g"];
+
+
+  ledcWrite(LED_R_CHANNEL, r);    
+  ledcWrite(LED_G_CHANNEL, g);
+  ledcWrite(LED_B_CHANNEL, b);
+   
+}
+
+
 // Handler for receiving MQTT message
 void allMSG_Handler (const String & topic, const String & payload) {
   Serial.print("received MQTT via wildcard: ");
@@ -103,6 +124,10 @@ void onConnectionEstablished() {
 
     // Subscribe to "jake/#"
     WiFiMQTTclient.subscribe("jake/#", allMSG_Handler);
+
+    // Subscribe to "PJsensors/rgb2"
+    WiFiMQTTclient.subscribe("PJsensors/rgb2", rgb2_Handler);
+
 
 
     Serial.println("");
