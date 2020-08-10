@@ -27,34 +27,34 @@ void setup()
   ledcSetup(LED_B_CHANNEL, 12000, 8);
 
 
-//turn on LEDs
-  ledcWrite(LED_R_CHANNEL, 255);    
+  //turn on LEDs
+  ledcWrite(LED_R_CHANNEL, 255);
   ledcWrite(LED_G_CHANNEL, 255);
   ledcWrite(LED_B_CHANNEL, 255);
 
   delay(1000);
-//turn off LEDs  
-  ledcWrite(LED_R_CHANNEL, 0);    
+  //turn off LEDs
+  ledcWrite(LED_R_CHANNEL, 0);
   ledcWrite(LED_G_CHANNEL, 0);
   ledcWrite(LED_B_CHANNEL, 0);
-  
+
   delay(1000);
-  
-  ledcWrite(LED_R_CHANNEL, 255);    
+
+  ledcWrite(LED_R_CHANNEL, 255);
   delay(500);
-  ledcWrite(LED_R_CHANNEL, 0);    
+  ledcWrite(LED_R_CHANNEL, 0);
   delay(500);
 
-  ledcWrite(LED_G_CHANNEL, 255);    
+  ledcWrite(LED_G_CHANNEL, 255);
   delay(500);
-  ledcWrite(LED_G_CHANNEL, 0);    
+  ledcWrite(LED_G_CHANNEL, 0);
   delay(500);
- 
-  ledcWrite(LED_B_CHANNEL, 255);    
-  delay(500);
-  ledcWrite(LED_B_CHANNEL, 0); 
 
-        
+  ledcWrite(LED_B_CHANNEL, 255);
+  delay(500);
+  ledcWrite(LED_B_CHANNEL, 0);
+
+
   //--------------------------------------------
   // Optional Features of EspMQTTClient
   //WiFiMQTTclient.enableDebuggingMessages(); // Enable MQTT debugging messages sent to serial output
@@ -76,20 +76,19 @@ void rgb2_Handler (const String & payload) {
   Serial.print("received MQTT topic PJsensors/rgb2: ");
   Serial.println(payload);
 
- StaticJsonDocument<100> doc;
+  StaticJsonDocument<100> doc;
 
   // Deserialize the JSON document
   DeserializationError error = deserializeJson(doc, payload);
 
- int b = doc["b"]; 
- int r = doc["r"];
- int g = doc["g"];
+  int b = doc["b"];
+  int r = doc["r"];
+  int g = doc["g"];
 
-
-  ledcWrite(LED_R_CHANNEL, r);    
+  ledcWrite(LED_R_CHANNEL, r);
   ledcWrite(LED_G_CHANNEL, g);
   ledcWrite(LED_B_CHANNEL, b);
-   
+
 }
 
 
